@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.sky.xposed.bullet.BuildConfig;
 import com.sky.xposed.bullet.hook.base.BaseHook;
+import com.sky.xposed.bullet.util.ActivityUtil;
 import com.sky.xposed.common.util.DisplayUtil;
 import com.sky.xposed.javax.MethodHook;
 
@@ -78,12 +79,8 @@ public class BulletHook extends BaseHook {
             @Override
             public void onClick(View view) {
 
-                // 跳转到
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName(
-                        "com.bullet.messenger",
-                        "com.smartisan.flashim.smartisanmap.view.NearbySmartisanerActivity"));
-                mContext.startActivity(intent);
+                // 跳转到附近人界面
+                ActivityUtil.startNearbySmartisanerActivity(mContext);
             }
         });
 
