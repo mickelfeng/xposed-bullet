@@ -19,8 +19,6 @@ package com.sky.xposed.bullet.util;
 
 import com.sky.xposed.common.util.Alog;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 /**
  * Created by sky on 18-3-27.
  */
@@ -35,7 +33,7 @@ public class ToStringUtil {
         }
 
         // 直接输出
-        Alog.d(ToStringBuilder.reflectionToString(object));
+//        Alog.d(ToStringBuilder.reflectionToString(object));
     }
 
     public static void toString(String tag, Object object) {
@@ -46,6 +44,6 @@ public class ToStringUtil {
         }
 
         // 直接输出
-        Alog.d(tag + " " + ToStringBuilder.reflectionToString(object));
+//        Alog.d(tag + " " + ToStringBuilder.reflectionToString(object));
     }
 }

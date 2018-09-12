@@ -17,7 +17,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
 
@@ -27,7 +27,7 @@
 
         <meta-data
             android:name="xposeddescription"
-            android:value="子弹短信相关功能"/>
+            android:value="开启子弹短信附近群的功能"/>
 
         <meta-data
             android:name="xposedminversion"

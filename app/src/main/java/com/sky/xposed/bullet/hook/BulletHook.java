@@ -19,13 +19,16 @@ package com.sky.xposed.bullet.hook;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sky.xposed.bullet.BuildConfig;
 import com.sky.xposed.bullet.hook.base.BaseHook;
-import com.sky.xposed.bullet.util.FindUtil;
-import com.sky.xposed.common.util.Alog;
+import com.sky.xposed.common.util.DisplayUtil;
 import com.sky.xposed.javax.MethodHook;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -48,38 +51,49 @@ public class BulletHook extends BaseHook {
     private void injectionUISettings() {
 
         findMethod(
-                "com.smartisan.flashim.main.fragment.HomeFragment",
-                "a", int.class)
+                "com.smartisan.flashim.contact.fragment.AddFriendFragment",
+                "onViewCreated", View.class, Bundle.class)
                 .hook(new MethodHook.AfterCallback() {
                     @Override
                     public void onAfter(XC_MethodHook.MethodHookParam param) {
 
                         Activity activity = (Activity) XposedHelpers
                                 .callMethod(param.thisObject, "getActivity");
-                        handlerHomeNearby((ViewGroup) XposedHelpers
+                        handlerFriendNearby((RelativeLayout) XposedHelpers
                                 .callMethod(activity, "getTitleBar"));
                     }
                 });
     }
 
-    private void handlerHomeNearby(ViewGroup titleBar) {
+    private void handlerFriendNearby(RelativeLayout titleBar) {
 
-        View imageView = FindUtil.findImageView(titleBar);
+        if (titleBar == null) return;
 
-        if (imageView == null) return;
-
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+        TextView  nearbyView = new TextView(mContext);
+        nearbyView.setGravity(Gravity.CENTER);
+        nearbyView.setText("附近群");
+        nearbyView.setTextColor(Color.WHITE);
+        nearbyView.setTextSize(14);
+        nearbyView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View view) {
 
+                // 跳转到
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(
                         "com.bullet.messenger",
                         "com.smartisan.flashim.smartisanmap.view.NearbySmartisanerActivity"));
                 mContext.startActivity(intent);
-                return true;
             }
         });
+
+        // 布局属性
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                DisplayUtil.dip2px(mContext, 70), RelativeLayout.LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        // 添加到标题栏中
+        titleBar.addView(nearbyView, params);
     }
 
     public void onModifyValue(String key, Object value) {
@@ -87,9 +101,6 @@ public class BulletHook extends BaseHook {
     }
 
     private void testHook() {
-
-        Alog.d(">>>>>>>>>>>>> " + findClass("com.smartisan.flashim.main.activity.MainActivity"));
-        Alog.d(">>>>>>>>>>>>> " + findClass("com.smartisan.flashim.smartisanmap.view.NearbySmartisanerActivity"));
 
 //        findMethod(
 //                "android.app.Dialog", "show")
@@ -122,8 +133,5 @@ public class BulletHook extends BaseHook {
 //                        Alog.d(">>>>>>>>>>>>>> showAtLocation1 " + param.thisObject);
 //                    }
 //                });
-
-
-
     }
 }

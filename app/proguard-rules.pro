@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepclasseswithmembernames class * implements java.io.Serializable {*;}
+
+-keep class com.sky.xposed.bullet.Main {*;}
+-keep class com.sky.xposed.bullet.StringFog
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

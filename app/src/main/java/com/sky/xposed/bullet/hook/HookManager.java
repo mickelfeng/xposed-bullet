@@ -29,7 +29,7 @@ import com.sky.xposed.common.helper.ReceiverHelper;
 import com.sky.xposed.common.util.Alog;
 import com.sky.xposed.common.util.Pair;
 import com.sky.xposed.common.util.ToastUtil;
-import com.squareup.picasso.Picasso;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +79,11 @@ public class HookManager implements ReceiverHelper.ReceiverCallback {
                 this, com.sky.xposed.common.Constant.Action.REFRESH_PREFERENCE);
 
         ToastUtil.getInstance().init(context);
-        Picasso.setSingletonInstance(new Picasso.Builder(context).build());
+//        Picasso.setSingletonInstance(new Picasso.Builder(context).build());
 
         // 添加统计
-//        CrashReport.initCrashReport(mContext, "5a1f1ac8fe", BuildConfig.DEBUG);
-//        CrashReport.setAppChannel(mContext, BuildConfig.FLAVOR);
+        CrashReport.initCrashReport(mContext, "6d7316a610", BuildConfig.DEBUG);
+        CrashReport.setAppChannel(mContext, BuildConfig.FLAVOR);
 
         // 注册事件
         mReceiverHelper.registerReceiver();
