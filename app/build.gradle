@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'stringfog'
 
-apply from: "../config.gradle"
-
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -33,10 +31,9 @@ android {
                     outputFileName = "${project.name}_${variant.flavorName}_v${variant.versionName}.apk"
                 }
             }
-            randomKeywords()
 
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', "${rootDir}/proguard/proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.sky
         }
         debug {
